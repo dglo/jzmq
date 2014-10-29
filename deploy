@@ -1,3 +1,34 @@
 #!/bin/sh
 
-mvn clean install deploy site site:deploy
+REPO_URL=sftp://block.wipac.wisc.edu//var/www/html/maven2/repository
+REPO_ID=icecube-maven-repository
+
+for f in target/*.jar; do
+    case "$f" in
+	*-javadoc.jar) ;;
+	*/original-*.jar) ;;
+	*-sources.jar) ;;
+	*-native-*.jar)
+	    base="${f##*/}"
+	    nover="${base##*native-}"
+	    nospc="${nover//[[:space:]]}"
+	    classifier="${nospc%.*}"
+	    mvn -f icecube-pom.xml \
+		deploy:deploy-file \
+		-DartifactId=jzmq-native \
+		-Durl="$REPO_URL" \
+		-DrepositoryId="$REPO_ID" \
+		-DpomFile=pom.xml \
+		-Dclassifier="${classifier}" \
+		-Dfile="$f"
+	    ;;
+	*)
+	    mvn -f icecube-pom.xml \
+		deploy:deploy-file \
+		-Durl="$REPO_URL" \
+		-DrepositoryId="$REPO_ID" \
+		-DpomFile=pom.xml \
+		-Dfile="$f"
+	    ;;
+    esac
+done
