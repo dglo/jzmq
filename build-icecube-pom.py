@@ -21,7 +21,7 @@ BUILD_PLUGIN_IGNORE = ("maven-gpg-plugin", "buildnumber-maven-plugin",
 
 MAC_OS_NAME = "Darwin"
 
-MAVEN_REPO_URL = "scp://block.wipac.wisc.edu//var/www/html/maven2/repository"
+MAVEN_REPO_URL = "scp://maven.wipac.wisc.edu//var/www/html/maven2/repository"
 
 def add_dependencies(elem):
     top = etree.SubElement(elem, "dependencies")
