@@ -1,0 +1,5 @@
+#!/bin/sh
+
+mvn -f icecube-pom.xml clean &&
+./autogen.sh && ./configure && make clean && make &&
+mvn -f icecube-pom.xml test package
