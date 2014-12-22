@@ -1,9 +1,17 @@
 #!/bin/sh
 
+LTIZE=
+case `uname` in
+    Darwin*) LTIZE=glibtoolize;;
+    *) LTIZE=libtoolize;;
+esac
+
 aclocal &&
-automake --gnu --add-missing &&
-autoconf &&
-./configure &&
-make clean &&
-make &&
-mvn test install
+    $LTIZE --automake &&
+    automake --gnu --add-missing &&
+    autoconf &&
+    autoreconf -i &&
+    ./configure &&
+    make clean &&
+    make &&
+    mvn test install
