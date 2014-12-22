@@ -72,6 +72,11 @@
 					<include>libjzmq.dll</include>
 				</includes>
 			</resource>
+			<resource>
+				<filtering>false</filtering>
+				<targetPath>NATIVE</targetPath>
+				<directory>${basedir}/external</directory>
+			</resource>
 		</resources>
 
 		<plugins>
