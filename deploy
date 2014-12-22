@@ -1,38 +1,3 @@
 #!/bin/sh
 
-REPO_URL=sftp://maven.wipac.wisc.edu//var/www/html/maven2/repository
-REPO_ID=icecube-maven-repository
-
-VERSION=`grep '<version>' icecube-pom.xml | head -1 | sed -e 's/ *<version>//' -e 's/<.version> *$//'`
-
-for f in target/*.jar; do
-    case "$f" in
-	*-javadoc.jar) ;;
-	*/original-*.jar) ;;
-	*-sources.jar) ;;
-	*-native-*.jar)
-	    base="${f##*/}"
-	    nover="${base##*native-}"
-	    nospc="${nover//[[:space:]]}"
-	    classifier="${nospc%.*}"
-	    mvn -f icecube-pom.xml \
-		deploy:deploy-file \
-		-DartifactId=jzmq-native \
-		-Durl="$REPO_URL" \
-		-DrepositoryId="$REPO_ID" \
-		-DpomFile=pom.xml \
-		-Dclassifier="${classifier}" \
-		-Dversion="${VERSION}" \
-		-Dfile="$f"
-	    ;;
-	*)
-	    mvn -f icecube-pom.xml \
-		deploy:deploy-file \
-		-Durl="$REPO_URL" \
-		-DrepositoryId="$REPO_ID" \
-		-DpomFile=pom.xml \
-		-Dversion="${VERSION}" \
-		-Dfile="$f"
-	    ;;
-    esac
-done
+mvn clean install deploy site site:deploy

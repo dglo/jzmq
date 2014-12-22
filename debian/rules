@@ -14,7 +14,6 @@ configure: configure-stamp
 configure-stamp:
 	dh_testdir
 
-	./autogen.sh
 	./configure $(CROSS) \
 	    --prefix=/usr \
 	    CFLAGS="$(CFLAGS)" \
