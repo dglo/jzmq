@@ -5,7 +5,7 @@
 
 	<groupId>org.zeromq</groupId>
 	<artifactId>jzmq</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.0-ICECUBE</version>
 	<packaging>jar</packaging>
 	<name>jzmq</name>
 
@@ -22,8 +22,9 @@
 	<url>https://zeromq.org/</url>
 
 	<scm>
-		<connection>scm:git://github.com/zeromq/jzmq</connection>
+		<connection>scm:svn:http://code.icecube.wisc.edu/daq/projects/jzmq/trunk</connection>
 		<tag>HEAD</tag>
+		<url>http://code.icecube.wisc.edu/daq/projects/jzmq</url>
 	</scm>
 
 	<licenses>
@@ -94,14 +95,14 @@
 					<timestampFormat>{0,date,yyyy-MM-dd HH:mm Z}</timestampFormat>
 				</configuration>
 			</plugin>
-      
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>${maven-jar-plugin.version}</version>
 				<inherited>true</inherited>
 				<configuration>
-					<archive>                   
+					<archive>
 						<manifest>
 							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
 						</manifest>
@@ -171,16 +172,24 @@
 
 		</plugins>
 
+
+    <extensions>
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-ssh</artifactId>
+        <version>LATEST</version>
+      </extension>
+    </extensions>
 	</build>
 
   <distributionManagement>
     <repository>
       <id>icecube-maven-repository</id>
-      <url>scpexe://pub.icecube.wisc.edu/net/maven2/repository</url>
+      <url>sftp://maven.wipac.wisc.edu//var/www/html/maven2/repository</url>
     </repository>
     <site>
       <id>dglo-website</id>
-      <url>scpexe://pub.icecube.wisc.edu/home/dglo/public_html/jzmq</url>
+      <url>sftp://pub.icecube.wisc.edu/home/dglo/public_html/jzmq</url>
     </site>
   </distributionManagement>
 
